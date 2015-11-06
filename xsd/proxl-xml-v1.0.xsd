@@ -59,7 +59,12 @@
 			</xs:sequence>
 			<xs:attribute name="name" type="xs:string" use="required">
 				<xs:annotation>
-					<xs:documentation>The name of the search program, e.g., "Kojak" or "XQuest"</xs:documentation>
+					<xs:documentation>The name of the search program, e.g., "Kojak" or "XQuest" Used to reference this search program in this document.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="display_name">
+				<xs:annotation>
+					<xs:documentation>If present, the value for this attribute will be used to display the name of this program in the web site. If abscent the value for "name" will be used.</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 			<xs:attribute name="version" type="xs:string" use="required">
@@ -307,7 +312,7 @@
 			</xs:attribute>
 			<xs:attribute name="default_show" type="xs:boolean">
 				<xs:annotation>
-					<xs:documentation>If present, and if set to true, this score will be shown by default in ProXL when displaying peptide-level data.</xs:documentation>
+					<xs:documentation>If present, and if set to true, this score will be shown by default in ProXL when displaying PSM data.</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 			<xs:attribute name="default_filter" type="xs:boolean">
@@ -608,14 +613,14 @@
 		</xs:annotation>
 		<xs:complexType>
 			<xs:all>
-				<xs:element ref="monolink_masses">
+				<xs:element ref="monolink_masses" minOccurs="0">
 					<xs:annotation>
-						<xs:documentation>The list of possible masses that monolinks may be reported as having in this search.</xs:documentation>
+						<xs:documentation>The list of possible masses that monolinks may be reported as having in this search. Required if monolinks were searched for and if spectra are being imported.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
-				<xs:element ref="crosslink_masses">
+				<xs:element ref="crosslink_masses" minOccurs="0">
 					<xs:annotation>
-						<xs:documentation>The list of possible masses of this linker in this experiment when both ends of the linker are bound to peptides--such as in the case of crosslinks or looplinks.</xs:documentation>
+						<xs:documentation>The list of possible masses of this linker in this experiment when both ends of the linker are bound to peptides--such as in the case of crosslinks or looplinks. Required if crosslinks were searched for and if spectra are being imported.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 			</xs:all>
