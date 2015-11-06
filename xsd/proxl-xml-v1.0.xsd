@@ -45,6 +45,93 @@
 				</xs:annotation>
 			</xs:attribute>
 		</xs:complexType>
+		<xs:unique name="reported_peptide_string_key">
+			<xs:annotation>
+				<xs:documentation>Ensures the reported peptide strings are unique.</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="reported_peptides/reported_peptide"/>
+			<xs:field xpath="@reported_peptide_string"/>
+		</xs:unique>
+		<xs:key name="filterable_psm_program_anno_type_key">
+			<xs:annotation>
+				<xs:documentation>Sets up a unique key of search program + filterable PSM annotation name.</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="search_programs/search_program"/>
+			<xs:field xpath="@name"/>
+			<xs:field xpath="psm_annotation_types/filterable_psm_annotation_types/*/@name"/>
+		</xs:key>
+		<xs:key name="descriptive_psm_program_anno_type_key">
+			<xs:annotation>
+				<xs:documentation>Sets up a unique key for search program + descriptive PSM annotation name.</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="search_programs/search_program"/>
+			<xs:field xpath="@name"/>
+			<xs:field xpath="psm_annotation_types/descriptive_psm_annotation_types/*/@name"/>
+		</xs:key>
+		<xs:keyref name="filterable_psm_anno_ref" refer="filterable_psm_program_anno_type_key">
+			<xs:annotation>
+				<xs:documentation>Ensures the name of an annotation given to a PSM for a search program is a valid filterable annotation type for that program.</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="reported_peptides/reported_peptide/psms/psm/*/*"/>
+			<xs:field xpath="@search_program"/>
+			<xs:field xpath="@annotation_name"/>
+		</xs:keyref>
+		<xs:keyref name="descriptive_psm_anno_ref" refer="descriptive_psm_program_anno_type_key">
+			<xs:annotation>
+				<xs:documentation>Ensures the name of an annotation given to a PSM for a search program is a valid descriptive annotation type for that program.</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="reported_peptides/reported_peptide/psms/psm/*/*"/>
+			<xs:field xpath="@search_program"/>
+			<xs:field xpath="@annotation_name"/>
+		</xs:keyref>
+		<xs:key name="filterable_peptide_program_anno_type_key">
+			<xs:annotation>
+				<xs:documentation>Sets up a unique key for search program + peptide-level filterable annotation name.</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="search_programs/search_program"/>
+			<xs:field xpath="@name"/>
+			<xs:field xpath="reported_peptide_annotation_types/filterable_peptide_annotation_types/*/@name"/>
+		</xs:key>
+		<xs:key name="descriptive_peptide_program_anno_type_key">
+			<xs:annotation>
+				<xs:documentation>Sets up a unique key for search program + peptide-level descriptive annotation name.</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="search_programs/search_program"/>
+			<xs:field xpath="@name"/>
+			<xs:field xpath="reported_peptide_annotation_types/descriptive_peptide_annotation_types/*/@name"/>
+		</xs:key>
+		<xs:keyref name="filterable_peptide_anno_ref" refer="filterable_peptide_program_anno_type_key">
+			<xs:annotation>
+				<xs:documentation>Ensures the name of an annotation given to a reported peptide for a search program is a valid filterable annotation type for that program.</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="reported_peptides/reported_peptide/reported_peptide_annotations/*/*"/>
+			<xs:field xpath="@search_program"/>
+			<xs:field xpath="@annotation_name"/>
+		</xs:keyref>
+		<xs:keyref name="descriptive_peptide_anno_ref" refer="descriptive_peptide_program_anno_type_key">
+			<xs:annotation>
+				<xs:documentation>Ensures the name of an annotation given to a reported peptide for a search program is a valid descriptive annotation type for that program.</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="reported_peptides/reported_peptide/reported_peptide_annotations/*/*"/>
+			<xs:field xpath="@search_program"/>
+			<xs:field xpath="@annotation_name"/>
+		</xs:keyref>
+		<xs:unique name="psm_program_anno_types_unique">
+			<xs:annotation>
+				<xs:documentation>Ensure a given search program only uses a given name for an annotation of a PSM once, regardless of filterable or descriptive.</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="search_programs/search_program"/>
+			<xs:field xpath="@name"/>
+			<xs:field xpath="psm_annotation_types/*/*/@name"/>
+		</xs:unique>
+		<xs:unique name="reported_peptide_program_anno_type">
+			<xs:annotation>
+				<xs:documentation>Ensure a given search program only uses a given name for an annotation of a peptide once, regardless of filterable or descriptive.</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="search_programs/search_program"/>
+			<xs:field xpath="@name"/>
+			<xs:field xpath="reported_peptide_annotation_types/*/*/@name"/>
+		</xs:unique>
 	</xs:element>
 	<xs:element name="search_program">
 		<xs:annotation>
@@ -52,10 +139,28 @@
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="filterable_psm_annotation_types"/>
-				<xs:element ref="descriptive_psm_annotation_types" minOccurs="0"/>
-				<xs:element ref="filterable_peptide_annotation_types" minOccurs="0"/>
-				<xs:element ref="descriptive_peptide_annotation_types" minOccurs="0"/>
+				<xs:element name="psm_annotation_types">
+					<xs:annotation>
+						<xs:documentation>The types of annotations this search program has for PSMs--such as quality scores.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="filterable_psm_annotation_types"/>
+							<xs:element ref="descriptive_psm_annotation_types" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="reported_peptide_annotation_types" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The types of annotations this search program may have at the reported peptide level.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="filterable_peptide_annotation_types" minOccurs="0"/>
+							<xs:element ref="descriptive_peptide_annotation_types" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
 			</xs:sequence>
 			<xs:attribute name="name" type="xs:string" use="required">
 				<xs:annotation>
@@ -104,16 +209,29 @@
 						<xs:documentation>A list of peptides associated with a reported peptide in a PSM search. For example, a reported peptide that is a crosslinked pair of peptides will have two peptides associated with it. A looplink or unlink will have one.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
-				<xs:element ref="filterable_reported_peptide_annotations" minOccurs="0">
-					<xs:annotation>
-						<xs:documentation>The numeric annotations (usually scores of some type) assigned to a reported peptide in the experiment that are meant to describe the likelihood of the peptide being present given all PSMs. Intended to be used to filter out poor matches. Examples include p-value, q-value, PEP as generated by Percolator</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-				<xs:element ref="descriptive_reported_peptide_annotations" minOccurs="0"/>
 				<xs:element ref="psms">
 					<xs:annotation>
 						<xs:documentation>The PSMs found for this reported peptide in this search.</xs:documentation>
 					</xs:annotation>
+				</xs:element>
+				<xs:element name="reported_peptide_annotations" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Any annotations generated at the reported-peptide-level for this reported peptide.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="filterable_reported_peptide_annotations" minOccurs="0"/>
+							<xs:element ref="descriptive_reported_peptide_annotations" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+					<xs:unique name="reported_peptide_score_program_unique">
+						<xs:annotation>
+							<xs:documentation>Ensure a reported peptide only has one score for a given type from a given program.</xs:documentation>
+						</xs:annotation>
+						<xs:selector xpath="*/*"/>
+						<xs:field xpath="@search_program"/>
+						<xs:field xpath="@annotation_name"/>
+					</xs:unique>
 				</xs:element>
 			</xs:sequence>
 			<xs:attribute name="reported_peptide_string" type="xs:string" use="required">
@@ -291,7 +409,7 @@
 		<xs:complexType>
 			<xs:attribute name="name" type="xs:string" use="required">
 				<xs:annotation>
-					<xs:documentation>The name for this score, such as "q-value"</xs:documentation>
+					<xs:documentation>The name for this score, such as "q-value". Displayed on web site.</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 			<xs:attribute name="description" type="xs:string">
@@ -334,7 +452,7 @@
 		<xs:complexType>
 			<xs:attribute name="name" type="xs:string" use="required">
 				<xs:annotation>
-					<xs:documentation>The name for this score, such as "q-value"</xs:documentation>
+					<xs:documentation>The name for this score, such as "q-value". Displayed on web site.</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 			<xs:attribute name="description" type="xs:string">
@@ -377,7 +495,7 @@
 		<xs:complexType>
 			<xs:attribute name="name" type="xs:string" use="required">
 				<xs:annotation>
-					<xs:documentation>The name for this score, such as "q-value"</xs:documentation>
+					<xs:documentation>The name for this score, such as "q-value". Displayed on web site.</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 			<xs:attribute name="description" type="xs:string">
@@ -399,7 +517,7 @@
 		<xs:complexType>
 			<xs:attribute name="name" type="xs:string" use="required">
 				<xs:annotation>
-					<xs:documentation>The name for this score, such as "q-value"</xs:documentation>
+					<xs:documentation>The name for this score, such as "q-value". Displayed on web site.</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 			<xs:attribute name="description" type="xs:string">
@@ -500,7 +618,7 @@
 					<xs:documentation>The name of the search program, must be found in the search_programs element</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
-			<xs:attribute name="psm_annotation_name" type="xs:string" use="required">
+			<xs:attribute name="annotation_name" type="xs:string" use="required">
 				<xs:annotation>
 					<xs:documentation>The name of the psm annotation type (e.g., "q-value"). Must be found in the possible score types for the above search program</xs:documentation>
 				</xs:annotation>
@@ -522,7 +640,7 @@
 					<xs:documentation>The name of the search program, must be found in the search_programs element</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
-			<xs:attribute name="psm_annotation_name" type="xs:string" use="required">
+			<xs:attribute name="annotation_name" type="xs:string" use="required">
 				<xs:annotation>
 					<xs:documentation>The name of the psm annotation type (e.g., "q-value"). Must be found in the possible score types for the above search program</xs:documentation>
 				</xs:annotation>
@@ -592,6 +710,14 @@
 				</xs:annotation>
 			</xs:attribute>
 		</xs:complexType>
+		<xs:unique name="psm_program_score_unique">
+			<xs:annotation>
+				<xs:documentation>Ensure a PSM only has one score for a given name from a given search program.</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="*/*"/>
+			<xs:field xpath="@search_program"/>
+			<xs:field xpath="@annotation_name"/>
+		</xs:unique>
 	</xs:element>
 	<xs:element name="psms">
 		<xs:complexType>
@@ -606,6 +732,13 @@
 				<xs:element ref="search_program" maxOccurs="unbounded"/>
 			</xs:all>
 		</xs:complexType>
+		<xs:unique name="search_program_unique">
+			<xs:annotation>
+				<xs:documentation>Ensure a given name is only present once among the search programs.</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="search_program"/>
+			<xs:field xpath="@name"/>
+		</xs:unique>
 	</xs:element>
 	<xs:element name="linker">
 		<xs:annotation>
@@ -620,13 +753,13 @@
 				</xs:element>
 				<xs:element ref="crosslink_masses" minOccurs="0">
 					<xs:annotation>
-						<xs:documentation>The list of possible masses of this linker in this experiment when both ends of the linker are bound to peptides--such as in the case of crosslinks or looplinks. Required if crosslinks were searched for and if spectra are being imported.</xs:documentation>
+						<xs:documentation>The list of possible masses of this linker in this experiment when both ends of the linker are bound to peptides--such as in the case of crosslinks or looplinks. Required if crosslinks or looplinks were searched for and if spectra are being imported.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 			</xs:all>
 			<xs:attribute name="name" type="xs:string" use="required">
 				<xs:annotation>
-					<xs:documentation>The name of this crosslinker (e.g., "dss" or "edc"). This must match the name for a crosslinker currently supported by ProXL.</xs:documentation>
+					<xs:documentation>The name of this crosslinker (e.g., "dss" or "edc"). This must match the abbr field in the linker table for a crosslinker currently supported by ProXL.</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 		</xs:complexType>
@@ -654,7 +787,7 @@
 			<xs:all>
 				<xs:element ref="monolink_mass" maxOccurs="unbounded">
 					<xs:annotation>
-						<xs:documentation>A possible mass for this linker in this search when only one end of the linker is bound to a peptide. Use the same precision or better as when monolinks are reported as dynamic mods on peptides.</xs:documentation>
+						<xs:documentation>A mass used for this linker in this search when only one end of the linker is bound to a peptide. Use the same precision or better as when monolinks are reported as dynamic mods on peptides.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 			</xs:all>
@@ -665,7 +798,7 @@
 			<xs:all>
 				<xs:element ref="crosslink_mass" maxOccurs="unbounded">
 					<xs:annotation>
-						<xs:documentation>A possible mass for this linker in this search when both ends are bound to peptides--such as in crosslinks or looplinks</xs:documentation>
+						<xs:documentation>A mass used for this linker in this search when both ends are bound to peptides--such as in crosslinks or looplinks</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 			</xs:all>
@@ -680,6 +813,13 @@
 				<xs:element ref="linker" maxOccurs="unbounded"/>
 			</xs:all>
 		</xs:complexType>
+		<xs:unique name="linker_name_unique">
+			<xs:annotation>
+				<xs:documentation>Ensure a given linker name isonly present once.</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="linker"/>
+			<xs:field xpath="@name"/>
+		</xs:unique>
 	</xs:element>
 	<xs:element name="configuration_file">
 		<xs:annotation>
@@ -739,5 +879,12 @@
 				<xs:element ref="static_modification" maxOccurs="unbounded"/>
 			</xs:all>
 		</xs:complexType>
+		<xs:unique name="static_mod_residue_unique">
+			<xs:annotation>
+				<xs:documentation>Ensure only one static mod is present for any amino acid residue.</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="static_modification"/>
+			<xs:field xpath="@amino_acid"/>
+		</xs:unique>
 	</xs:element>
 </xs:schema>
