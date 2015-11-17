@@ -14,7 +14,7 @@
 				</xs:element>
 				<xs:element ref="linkers">
 					<xs:annotation>
-						<xs:documentation>The checmical linkers used in this experiment.</xs:documentation>
+						<xs:documentation>The checmical linkers used in this experiment. Note: currently, only 1 linker may be specified. Multiple linkers will be supported in near future.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 				<xs:element ref="reported_peptides">
@@ -443,9 +443,14 @@
 					<xs:documentation>If present, and if set to true, this score will be used as a default PSM-level filter when viewing data. Use sparingly.</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
-			<xs:attribute name="default_filter_value">
+			<xs:attribute name="default_filter_value" type="xs:decimal">
 				<xs:annotation>
 					<xs:documentation>This is the default cutoff value for this score when filtering data. If default_filter is set to true, this value must be set.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="sort_priority" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>This specifies the priority of this attribute in the default ordering of PSMs presented in proxl. Lower values indicate higher priority. E.g., if q-value has sort_priority of 0 and p-value has sort_priority of one, PSMs will be sorted by q-value first, then, if ties exist, sorted by p-value. Defaults to 10. Attributes with same priority will have priorities in order they are listed in this document.</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 		</xs:complexType>
@@ -486,9 +491,14 @@
 					<xs:documentation>If present, and if set to true, this score will be used as a default peptide-level filter when viewing data. Use sparingly.</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
-			<xs:attribute name="default_filter_value">
+			<xs:attribute name="default_filter_value" type="xs:decimal">
 				<xs:annotation>
 					<xs:documentation>This is the default cutoff value for this score when filtering data. If default_filter is set to true, this value must be set.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="sort_priority" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>This specifies the priority of this attribute in the default ordering of peptides presented in proxl. Lower values indicate higher priority. E.g., if q-value has sort_priority of 0 and p-value has sort_priority of one, peptides will be sorted by q-value first, then, if ties exist, sorted by p-value. Defaults to 10. Attributes with same priority will have priorities in order they are listed in this document.</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 		</xs:complexType>
@@ -815,7 +825,7 @@
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="linker" maxOccurs="unbounded"/>
+				<xs:element ref="linker"/>
 			</xs:sequence>
 		</xs:complexType>
 		<xs:unique name="linker_name_unique">
