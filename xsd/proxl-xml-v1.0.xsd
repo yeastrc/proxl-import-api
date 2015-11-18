@@ -7,11 +7,7 @@
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="search_programs">
-					<xs:annotation>
-						<xs:documentation>The search program(s) used to generate the PSMs and associated scores in this search. More than one search program may be used, as in the case of using Percolator to assign q-values for data search with Kojak. Percolator and Kojak would each have an entry here. However, all PSMs must be annotated by all search programs and all search programs must refer to reported peptides using the same string.</xs:documentation>
-					</xs:annotation>
-				</xs:element>
+				<xs:element ref="search_program_info"/>
 				<xs:element ref="linkers">
 					<xs:annotation>
 						<xs:documentation>The checmical linkers used in this experiment. Note: currently, only 1 linker may be specified. Multiple linkers will be supported in near future.</xs:documentation>
@@ -61,7 +57,7 @@
 			<xs:annotation>
 				<xs:documentation>Sets up a unique key of search program + filterable PSM annotation name.</xs:documentation>
 			</xs:annotation>
-			<xs:selector xpath="search_programs/search_program"/>
+			<xs:selector xpath="search_program_info/search_programs/search_program"/>
 			<xs:field xpath="@name"/>
 			<xs:field xpath="psm_annotation_types/filterable_psm_annotation_types/*/@name"/>
 		</xs:key>
@@ -69,7 +65,7 @@
 			<xs:annotation>
 				<xs:documentation>Sets up a unique key for search program + descriptive PSM annotation name.</xs:documentation>
 			</xs:annotation>
-			<xs:selector xpath="search_programs/search_program"/>
+			<xs:selector xpath="search_program_info/search_programs/search_program"/>
 			<xs:field xpath="@name"/>
 			<xs:field xpath="psm_annotation_types/descriptive_psm_annotation_types/*/@name"/>
 		</xs:key>
@@ -93,7 +89,7 @@
 			<xs:annotation>
 				<xs:documentation>Sets up a unique key for search program + peptide-level filterable annotation name.</xs:documentation>
 			</xs:annotation>
-			<xs:selector xpath="search_programs/search_program"/>
+			<xs:selector xpath="search_program_info/search_programs/search_program"/>
 			<xs:field xpath="@name"/>
 			<xs:field xpath="reported_peptide_annotation_types/filterable_peptide_annotation_types/*/@name"/>
 		</xs:key>
@@ -101,7 +97,7 @@
 			<xs:annotation>
 				<xs:documentation>Sets up a unique key for search program + peptide-level descriptive annotation name.</xs:documentation>
 			</xs:annotation>
-			<xs:selector xpath="search_programs/search_program"/>
+			<xs:selector xpath="search_program_info/search_programs/search_program"/>
 			<xs:field xpath="@name"/>
 			<xs:field xpath="reported_peptide_annotation_types/descriptive_peptide_annotation_types/*/@name"/>
 		</xs:key>
@@ -121,22 +117,54 @@
 			<xs:field xpath="@search_program"/>
 			<xs:field xpath="@annotation_name"/>
 		</xs:keyref>
-		<xs:unique name="psm_program_anno_types_unique">
+		<xs:key name="psm_program_anno_types_key">
 			<xs:annotation>
 				<xs:documentation>Ensure a given search program only uses a given name for an annotation of a PSM once, regardless of filterable or descriptive.</xs:documentation>
 			</xs:annotation>
-			<xs:selector xpath="search_programs/search_program"/>
+			<xs:selector xpath="search_program_info/search_programs/search_program"/>
 			<xs:field xpath="@name"/>
 			<xs:field xpath="psm_annotation_types/*/*/@name"/>
-		</xs:unique>
-		<xs:unique name="reported_peptide_program_anno_type">
+		</xs:key>
+		<xs:key name="reported_peptide_program_anno_type_key">
 			<xs:annotation>
 				<xs:documentation>Ensure a given search program only uses a given name for an annotation of a peptide once, regardless of filterable or descriptive.</xs:documentation>
 			</xs:annotation>
-			<xs:selector xpath="search_programs/search_program"/>
+			<xs:selector xpath="search_program_info/search_programs/search_program"/>
 			<xs:field xpath="@name"/>
 			<xs:field xpath="reported_peptide_annotation_types/*/*/@name"/>
-		</xs:unique>
+		</xs:key>
+		<xs:keyref name="visible_psm_annotation_keyref" refer="psm_program_anno_types_key">
+			<xs:annotation>
+				<xs:documentation>Ensures a given combo of PSM-level search program and annotation name specified in the default visible annotations exists.</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="search_program_info/default_visible_annotations/visible_psm_annotations/search_annotation"/>
+			<xs:field xpath="@search_program"/>
+			<xs:field xpath="@annotation_name"/>
+		</xs:keyref>
+		<xs:keyref name="visible_reported_peptide_annotation_keyref" refer="reported_peptide_program_anno_type_key">
+			<xs:annotation>
+				<xs:documentation>Ensures a given combo of peptide-level search program and annotation name specified in the default visible annotations exists.</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="search_program_info/default_visible_annotations/visible_reported_peptide_annotations/search_annotation"/>
+			<xs:field xpath="@search_program"/>
+			<xs:field xpath="@annotation_name"/>
+		</xs:keyref>
+		<xs:keyref name="psm_sort_order_keyref" refer="filterable_psm_program_anno_type_key">
+			<xs:annotation>
+				<xs:documentation>Ensures the combo of search program and annotation type is a valid filterable PSM annotation type for that program.</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="search_program_info/annotation_sort_order/psm_annotation_sort_order/search_annotation"/>
+			<xs:field xpath="@search_program"/>
+			<xs:field xpath="@annotation_name"/>
+		</xs:keyref>
+		<xs:keyref name="peptide_sort_order_keyref" refer="filterable_peptide_program_anno_type_key">
+			<xs:annotation>
+				<xs:documentation>Ensures the combo of search program and annotation type is a valid filterable peptide annotation type for that program.</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath="search_program_info/annotation_sort_order/reported_peptide_annotation_sort_order/search_annotation"/>
+			<xs:field xpath="@search_program"/>
+			<xs:field xpath="@annotation_name"/>
+		</xs:keyref>
 	</xs:element>
 	<xs:element name="search_program">
 		<xs:annotation>
@@ -433,11 +461,6 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:attribute>
-			<xs:attribute name="default_show" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>If present, and if set to true, this score will be shown by default in ProXL when displaying PSM data.</xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
 			<xs:attribute name="default_filter" type="xs:boolean">
 				<xs:annotation>
 					<xs:documentation>If present, and if set to true, this score will be used as a default PSM-level filter when viewing data. Use sparingly.</xs:documentation>
@@ -446,11 +469,6 @@
 			<xs:attribute name="default_filter_value" type="xs:decimal">
 				<xs:annotation>
 					<xs:documentation>This is the default cutoff value for this score when filtering data. If default_filter is set to true, this value must be set.</xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
-			<xs:attribute name="sort_priority" type="xs:integer">
-				<xs:annotation>
-					<xs:documentation>This specifies the priority of this attribute in the default ordering of PSMs presented in proxl. Lower values indicate higher priority. E.g., if q-value has sort_priority of 0 and p-value has sort_priority of one, PSMs will be sorted by q-value first, then, if ties exist, sorted by p-value. Defaults to 10. Attributes with same priority will have priorities in order they are listed in this document.</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 		</xs:complexType>
@@ -481,11 +499,6 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:attribute>
-			<xs:attribute name="default_show" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>If present, and if set to true, this score will be shown by default in ProXL when displaying peptide-level data.</xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
 			<xs:attribute name="default_filter" type="xs:boolean">
 				<xs:annotation>
 					<xs:documentation>If present, and if set to true, this score will be used as a default peptide-level filter when viewing data. Use sparingly.</xs:documentation>
@@ -494,11 +507,6 @@
 			<xs:attribute name="default_filter_value" type="xs:decimal">
 				<xs:annotation>
 					<xs:documentation>This is the default cutoff value for this score when filtering data. If default_filter is set to true, this value must be set.</xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
-			<xs:attribute name="sort_priority" type="xs:integer">
-				<xs:annotation>
-					<xs:documentation>This specifies the priority of this attribute in the default ordering of peptides presented in proxl. Lower values indicate higher priority. E.g., if q-value has sort_priority of 0 and p-value has sort_priority of one, peptides will be sorted by q-value first, then, if ties exist, sorted by p-value. Defaults to 10. Attributes with same priority will have priorities in order they are listed in this document.</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 		</xs:complexType>
@@ -518,11 +526,6 @@
 					<xs:documentation>A description for what this score is. Will be shown in ProXL as a tooltip for this score.</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
-			<xs:attribute name="default_show" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>If present, and if set to true, this score will be shown by default in ProXL for PSMs.</xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="descriptive_peptide_annotation_type">
@@ -538,11 +541,6 @@
 			<xs:attribute name="description" type="xs:string">
 				<xs:annotation>
 					<xs:documentation>A description for what this score is. Will be shown in ProXL as a tooltip for this score.</xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
-			<xs:attribute name="default_show" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>If present, and if set to true, this score will be shown by default in ProXL for peptides.</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 		</xs:complexType>
@@ -742,6 +740,9 @@
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="search_programs">
+		<xs:annotation>
+			<xs:documentation>The search program(s) used to generate the PSMs and associated scores in this search. More than one search program may be used, as in the case of using Percolator to assign q-values for data search with Kojak. Percolator and Kojak would each have an entry here. However, all PSMs must be annotated by all search programs and all search programs must refer to reported peptides using the same string.</xs:documentation>
+		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="search_program" maxOccurs="unbounded"/>
@@ -923,6 +924,101 @@
 					<xs:documentation>Any protein name beginning with the supplied string will be considered a decoy protein and ignored.</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="search_program_info">
+		<xs:annotation>
+			<xs:documentation>Information relating to the search program(s) used to generate the peptide spectrum matches and scores/annotations for PSMs and peptides.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="search_programs"/>
+				<xs:element ref="default_visible_annotations" minOccurs="0"/>
+				<xs:element ref="annotation_sort_order" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The sort order applied to filterable annotations when presenting the default listing of PSMs or peptides. The order will be in the order the annotations appear here. E.g. if "q-value" is listed first and "p-value" is listed next, the items will be sorted on q-value first, then, sorted on p-value in the case of ties. Note: all annotation types listed here must be filterable. If this element is not present, no default sorting will be applied to listed PSMs or peptides in ProXL.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="default_visible_annotations">
+		<xs:annotation>
+			<xs:documentation>The annotations from the search program(s) that are visible by default in the ProXL web app. The will appear in the same order they appear here.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="visible_psm_annotations" minOccurs="0"/>
+				<xs:element ref="visible_reported_peptide_annotations" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="visible_psm_annotations">
+		<xs:annotation>
+			<xs:documentation>The PSM-level annotations that are visible by default when viewing PSM-level data. They will appear in the order they appear here.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="search_annotation" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="visible_reported_peptide_annotations">
+		<xs:annotation>
+			<xs:documentation>The peptide-level annotations that are visible by default. They will appear in the order they appear here.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="search_annotation" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="search_annotation">
+		<xs:annotation>
+			<xs:documentation>A reference to an annotation in a search program.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="search_program" use="required">
+				<xs:annotation>
+					<xs:documentation>The name of a search program, must match a name for a search program in this document. E.g., "kojak"</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="annotation_name" use="required">
+				<xs:annotation>
+					<xs:documentation>The name of the annotation, must match a name of an annotation for the search_program. E.g., "q-value"</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="annotation_sort_order">
+		<xs:annotation>
+			<xs:documentation>The sort order applied to filterable annotation when presenting the default listing of PSMs or peptides. The order will be in the order the annotations appear here. E.g. if "q-value" is listed first and "p-value" is listed next, the items will be sorted on q-value first, then, sorted on p-value in the case of ties. Note: all annotation types listed here must be filterable. If this element is not present, no default sorting will be applied to listed PSMs or peptides in ProXL.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="psm_annotation_sort_order" minOccurs="0"/>
+				<xs:element ref="reported_peptide_annotation_sort_order" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="psm_annotation_sort_order">
+		<xs:annotation>
+			<xs:documentation>The sort order applied to filterable PSM annotations when presenting the default listing of PSMs. The order will be in the order the annotations appear here. E.g. if "q-value" is listed first and "p-value" is listed next, the PSMs will be sorted on q-value first, then, sorted on p-value in the case of ties. Note: all annotation types listed here must be filterable. If this element is not present, no default sorting will be applied to listed PSMs.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="search_annotation" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="reported_peptide_annotation_sort_order">
+		<xs:annotation>
+			<xs:documentation>The sort order applied to filterable peptide annotations when presenting the default listing of peptides. The order will be in the order the annotations appear here. E.g. if "q-value" is listed first and "p-value" is listed next, the peptides will be sorted on q-value first, then, sorted on p-value in the case of ties. Note: all annotation types listed here must be filterable. If this element is not present, no default sorting will be applied to listed peptides.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="search_annotation" maxOccurs="unbounded"/>
+			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 </xs:schema>
