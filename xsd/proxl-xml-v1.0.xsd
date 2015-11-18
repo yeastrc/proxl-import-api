@@ -10,7 +10,7 @@
 				<xs:element ref="search_program_info"/>
 				<xs:element ref="linkers">
 					<xs:annotation>
-						<xs:documentation>The checmical linkers used in this experiment. Note: currently, only 1 linker may be specified. Multiple linkers will be supported in near future.</xs:documentation>
+						<xs:documentation>The chemical linkers used in this experiment. Note: currently, only 1 linker may be specified. Multiple linkers will be supported in near future.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 				<xs:element ref="reported_peptides">
@@ -822,7 +822,7 @@
 	</xs:element>
 	<xs:element name="linkers">
 		<xs:annotation>
-			<xs:documentation>The checmical linkers used in this experiment. There must be at least one.</xs:documentation>
+			<xs:documentation>The chemical linkers used in this experiment. There must be at least one.</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
