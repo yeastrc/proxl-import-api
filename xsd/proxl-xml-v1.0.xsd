@@ -274,7 +274,7 @@
 			</xs:attribute>
 			<xs:attribute name="type" type="link_type" use="required">
 				<xs:annotation>
-					<xs:documentation>The type of reported peptide, either "crosslink" or two peptides linked by a crosslinker, "looplink" for a single peptide connected by two ends of a crosslinker, or "unlinked" for peptides that are neither of these.</xs:documentation>
+					<xs:documentation>The type of reported peptide, either "crosslink" for two peptides linked by a crosslinker, "looplink" for a single peptide connected by two ends of a crosslinker, or "unlinked" for peptides that are neither of these.</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 		</xs:complexType>
@@ -450,16 +450,10 @@
 					<xs:documentation>A description for what this score is. Will be shown in ProXL as a tooltip for this score.</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
-			<xs:attribute name="filter_direction" use="required">
+			<xs:attribute name="filter_direction" type="filter_direction_type" use="required">
 				<xs:annotation>
-					<xs:documentation>If set to "below", attributes with lower values are considered more significant (such as in the case of p-values). If set to "above", attributes with higher values are considered more significant (such as in the case of XCorr).</xs:documentation>
+					<xs:documentation>The direction a filterable annotation type is sorted in.  If set to "below", attributes with lower values are considered more significant (such as in the case of p-values). If set to "above", attributes with higher values are considered more significant (such as in the case of XCorr).</xs:documentation>
 				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:enumeration value="above"/>
-						<xs:enumeration value="below"/>
-					</xs:restriction>
-				</xs:simpleType>
 			</xs:attribute>
 			<xs:attribute name="default_filter" type="xs:boolean">
 				<xs:annotation>
@@ -488,16 +482,10 @@
 					<xs:documentation>A description for what this score is. Will be shown in ProXL as a tooltip for this score.</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
-			<xs:attribute name="filter_direction" use="required">
+			<xs:attribute name="filter_direction" type="filter_direction_type" use="required">
 				<xs:annotation>
-					<xs:documentation>If set to "below", attributes with lower values are considered more significant (such as in the case of p-values). If set to "above", attributes with higher values are considered more significant (such as in the case of XCorr).</xs:documentation>
+					<xs:documentation>The direction a filterable annotation type is sorted in.  If set to "below", attributes with lower values are considered more significant (such as in the case of p-values). If set to "above", attributes with higher values are considered more significant (such as in the case of XCorr).</xs:documentation>
 				</xs:annotation>
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:enumeration value="above"/>
-						<xs:enumeration value="below"/>
-					</xs:restriction>
-				</xs:simpleType>
 			</xs:attribute>
 			<xs:attribute name="default_filter" type="xs:boolean">
 				<xs:annotation>
@@ -545,6 +533,15 @@
 			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
+	<xs:simpleType name="filter_direction_type">
+		<xs:annotation>
+			<xs:documentation>The direction a filterable annotation type is sorted in.  If set to "below", attributes with lower values are considered more significant (such as in the case of p-values). If set to "above", attributes with higher values are considered more significant (such as in the case of XCorr).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="above"/>
+			<xs:enumeration value="below"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="sequence_type">
 		<xs:annotation>
 			<xs:documentation>Reported sequence strings must be of this type, includes only amino acid sequence</xs:documentation>
