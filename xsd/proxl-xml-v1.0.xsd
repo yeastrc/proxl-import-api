@@ -930,7 +930,7 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="search_programs"/>
-				<xs:element ref="default_visible_annotations" minOccurs="0"/>
+				<xs:element ref="default_visible_annotations"/>
 				<xs:element ref="annotation_sort_order" minOccurs="0">
 					<xs:annotation>
 						<xs:documentation>The sort order applied to filterable annotations when presenting the default listing of PSMs or peptides. The order will be in the order the annotations appear here. E.g. if "q-value" is listed first and "p-value" is listed next, the items will be sorted on q-value first, then, sorted on p-value in the case of ties. Note: all annotation types listed here must be filterable. If this element is not present, no default sorting will be applied to listed PSMs or peptides in ProXL.</xs:documentation>
@@ -945,7 +945,7 @@
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="visible_psm_annotations" minOccurs="0"/>
+				<xs:element ref="visible_psm_annotations"/>
 				<xs:element ref="visible_reported_peptide_annotations" minOccurs="0"/>
 			</xs:sequence>
 		</xs:complexType>
