@@ -387,7 +387,7 @@
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="modification" maxOccurs="unbounded"/>
+				<xs:element ref="modification" minOccurs="0" maxOccurs="unbounded"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -427,7 +427,7 @@
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="linked_position" maxOccurs="2">
+				<xs:element ref="linked_position" minOccurs="0" maxOccurs="2">
 					<xs:annotation>
 						<xs:documentation>A linked position in a peptide. A looplinked peptide will have two linked positions. A crosslinked peptide will have one (on each linked peptide).</xs:documentation>
 					</xs:annotation>
