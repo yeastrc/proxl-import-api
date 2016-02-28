@@ -266,7 +266,11 @@
 					</xs:annotation>
 				</xs:element>
 			</xs:sequence>
-			<xs:attribute name="sequence" type="sequence_type" use="required"/>
+			<xs:attribute name="sequence" type="sequence_type" use="required">
+				<xs:annotation>
+					<xs:documentation>The sequence of the peptide, without any special characters.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="modifications">
@@ -317,7 +321,7 @@
 			<xs:sequence>
 				<xs:element ref="linked_position" minOccurs="0" maxOccurs="2">
 					<xs:annotation>
-						<xs:documentation>A linked position in a peptide. A looplinked peptide will have two linked positions. A crosslinked peptide will have one (on each linked peptide).</xs:documentation>
+						<xs:documentation>A linked position in a peptide. A looplinked peptide will have two linked positions. A crosslinked peptide will have one (on each linked peptide). The first residue is position 1.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 			</xs:sequence>
