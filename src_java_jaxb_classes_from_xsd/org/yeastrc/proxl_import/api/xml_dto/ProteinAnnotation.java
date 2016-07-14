@@ -8,7 +8,7 @@
 
 package org.yeastrc.proxl_import.api.xml_dto;
 
-import java.math.BigDecimal;
+import java.math.BigInteger;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -25,9 +25,9 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;complexType&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *       &lt;attribute name="search_program" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
- *       &lt;attribute name="annotation_name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
- *       &lt;attribute name="value" use="required" type="{http://www.w3.org/2001/XMLSchema}decimal" /&gt;
+ *       &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="description" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="ncbi-taxonomy-id" type="{http://www.w3.org/2001/XMLSchema}integer" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -37,86 +37,86 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
-@XmlRootElement(name = "filterable_reported_peptide_annotation")
-public class FilterableReportedPeptideAnnotation {
+@XmlRootElement(name = "protein_annotation")
+public class ProteinAnnotation {
 
-    @XmlAttribute(name = "search_program", required = true)
-    protected String searchProgram;
-    @XmlAttribute(name = "annotation_name", required = true)
-    protected String annotationName;
-    @XmlAttribute(name = "value", required = true)
-    protected BigDecimal value;
+    @XmlAttribute(name = "name", required = true)
+    protected String name;
+    @XmlAttribute(name = "description")
+    protected String description;
+    @XmlAttribute(name = "ncbi-taxonomy-id")
+    protected BigInteger ncbiTaxonomyId;
 
     /**
-     * Gets the value of the searchProgram property.
+     * Gets the value of the name property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getSearchProgram() {
-        return searchProgram;
+    public String getName() {
+        return name;
     }
 
     /**
-     * Sets the value of the searchProgram property.
+     * Sets the value of the name property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setSearchProgram(String value) {
-        this.searchProgram = value;
+    public void setName(String value) {
+        this.name = value;
     }
 
     /**
-     * Gets the value of the annotationName property.
+     * Gets the value of the description property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getAnnotationName() {
-        return annotationName;
+    public String getDescription() {
+        return description;
     }
 
     /**
-     * Sets the value of the annotationName property.
+     * Sets the value of the description property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setAnnotationName(String value) {
-        this.annotationName = value;
+    public void setDescription(String value) {
+        this.description = value;
     }
 
     /**
-     * Gets the value of the value property.
+     * Gets the value of the ncbiTaxonomyId property.
      * 
      * @return
      *     possible object is
-     *     {@link BigDecimal }
+     *     {@link BigInteger }
      *     
      */
-    public BigDecimal getValue() {
-        return value;
+    public BigInteger getNcbiTaxonomyId() {
+        return ncbiTaxonomyId;
     }
 
     /**
-     * Sets the value of the value property.
+     * Sets the value of the ncbiTaxonomyId property.
      * 
      * @param value
      *     allowed object is
-     *     {@link BigDecimal }
+     *     {@link BigInteger }
      *     
      */
-    public void setValue(BigDecimal value) {
-        this.value = value;
+    public void setNcbiTaxonomyId(BigInteger value) {
+        this.ncbiTaxonomyId = value;
     }
 
 }

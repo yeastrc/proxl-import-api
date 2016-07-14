@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element ref="{}filterable_reported_peptide_annotation" maxOccurs="unbounded"/&gt;
+ *         &lt;element ref="{}protein" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -38,41 +38,41 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "filterableReportedPeptideAnnotation"
+    "protein"
 })
-@XmlRootElement(name = "filterable_reported_peptide_annotations")
-public class FilterableReportedPeptideAnnotations {
+@XmlRootElement(name = "matched_proteins")
+public class MatchedProteins {
 
-    @XmlElement(name = "filterable_reported_peptide_annotation", required = true)
-    protected List<FilterableReportedPeptideAnnotation> filterableReportedPeptideAnnotation;
+    @XmlElement(required = true)
+    protected List<Protein> protein;
 
     /**
-     * An annotation or score assigned to a reported peptide Gets the value of the filterableReportedPeptideAnnotation property.
+     * A protein found in the experiment.Gets the value of the protein property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the filterableReportedPeptideAnnotation property.
+     * This is why there is not a <CODE>set</CODE> method for the protein property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getFilterableReportedPeptideAnnotation().add(newItem);
+     *    getProtein().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link FilterableReportedPeptideAnnotation }
+     * {@link Protein }
      * 
      * 
      */
-    public List<FilterableReportedPeptideAnnotation> getFilterableReportedPeptideAnnotation() {
-        if (filterableReportedPeptideAnnotation == null) {
-            filterableReportedPeptideAnnotation = new ArrayList<FilterableReportedPeptideAnnotation>();
+    public List<Protein> getProtein() {
+        if (protein == null) {
+            protein = new ArrayList<Protein>();
         }
-        return this.filterableReportedPeptideAnnotation;
+        return this.protein;
     }
 
 }

@@ -8,6 +8,8 @@
 
 package org.yeastrc.proxl_import.api.xml_dto;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -26,8 +28,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element ref="{}modifications" minOccurs="0"/&gt;
- *         &lt;element ref="{}linked_positions" minOccurs="0"/&gt;
+ *         &lt;element ref="{}protein_annotation" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="sequence" use="required" type="{}sequence_type" /&gt;
  *     &lt;/restriction&gt;
@@ -39,64 +40,43 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "modifications",
-    "linkedPositions"
+    "proteinAnnotation"
 })
-@XmlRootElement(name = "peptide")
-public class Peptide {
+@XmlRootElement(name = "protein")
+public class Protein {
 
-    protected Modifications modifications;
-    @XmlElement(name = "linked_positions")
-    protected LinkedPositions linkedPositions;
+    @XmlElement(name = "protein_annotation", required = true)
+    protected List<ProteinAnnotation> proteinAnnotation;
     @XmlAttribute(name = "sequence", required = true)
     protected String sequence;
 
     /**
-     * Gets the value of the modifications property.
+     * Annotations for this sequence from the sequence database used to search the data. Since there may be multiple annotations for a single sequence (as separated by control-A characters in a FASTA file), each annotation should appear hear associated with a single protein.Gets the value of the proteinAnnotation property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Modifications }
-     *     
-     */
-    public Modifications getModifications() {
-        return modifications;
-    }
-
-    /**
-     * Sets the value of the modifications property.
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the proteinAnnotation property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Modifications }
-     *     
-     */
-    public void setModifications(Modifications value) {
-        this.modifications = value;
-    }
-
-    /**
-     * The list of linked positions in a peptide. Do not include monolinks here, they are listed as modifications in the modifications element. Only list looplinked and crosslinked positions.
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getProteinAnnotation().add(newItem);
+     * </pre>
      * 
-     * @return
-     *     possible object is
-     *     {@link LinkedPositions }
-     *     
-     */
-    public LinkedPositions getLinkedPositions() {
-        return linkedPositions;
-    }
-
-    /**
-     * Sets the value of the linkedPositions property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LinkedPositions }
-     *     
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link ProteinAnnotation }
+     * 
+     * 
      */
-    public void setLinkedPositions(LinkedPositions value) {
-        this.linkedPositions = value;
+    public List<ProteinAnnotation> getProteinAnnotation() {
+        if (proteinAnnotation == null) {
+            proteinAnnotation = new ArrayList<ProteinAnnotation>();
+        }
+        return this.proteinAnnotation;
     }
 
     /**

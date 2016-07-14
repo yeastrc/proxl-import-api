@@ -18,51 +18,14 @@
 						<xs:documentation>All the reported peptides from a PSM search. A reported peptide is a string that uniquely identifies an identified peptide (or linked pair of peptides) IN THIS SEARCH. (This string is not used by ProXL for this purpose.) A unique peptide i this context is one or two peptide sequences linked together at specific positions in those sequences, and with modifications at specific sites. E.g. PEP[16.01]TIDE would uniquely ID a peptide with this sequence with the given mass shift on the given position. or KEKTIDE(3)--PEPT[16.1]IDE(2) would uniquely identify the crosslink between two peptides with these ssequences at positions 3 and 2 (respectively) and where the second peptide has the shown modification. There is no syntax expected for reported peptide, but the reported peptide string must be unique, and no two reported peptides must describe the same peptide or pair of peptides linked at the same positions with the same modifications.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
-				<xs:element name="matched_proteins">
+
+
+				<xs:element ref="matched_proteins" minOccurs="0">
 					<xs:annotation>
 						<xs:documentation>Contains the protein sequences matched by peptides found in the experiment, and associated names, descriptions, and taxonomy IDs for those proteins. This will typically come from the FASTA file used to search the data. Only the proteins matched by the data should be included, not all the proteins in the FASTA file.</xs:documentation>
 					</xs:annotation>
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="protein">
-								<xs:annotation>
-									<xs:documentation>A protein found in the experiment.</xs:documentation>
-								</xs:annotation>
-								<xs:complexType>
-									<xs:sequence>
-										<xs:element name="protein_annotation" maxOccurs="unbounded">
-											<xs:annotation>
-												<xs:documentation>Annotations for this sequence from the sequence database used to search the data. Since there may be multiple annotations for a single sequence (as separated by control-A characters in a FASTA file), each annotation should appear hear associated with a single protein.</xs:documentation>
-											</xs:annotation>
-											<xs:complexType>
-												<xs:attribute name="name" type="xs:string" use="required">
-													<xs:annotation>
-														<xs:documentation>The name of this protein, used to report protein names in the ProXL web application. Typically, this is the name for a FASTA entry in a FASTA file in the form of: >NAME DESCRIPTION</xs:documentation>
-													</xs:annotation>
-												</xs:attribute>
-												<xs:attribute name="description" type="xs:string">
-													<xs:annotation>
-														<xs:documentation>The description of the protein.</xs:documentation>
-													</xs:annotation>
-												</xs:attribute>
-												<xs:attribute name="ncbi-taxonomy-id" type="xs:integer">
-													<xs:annotation>
-														<xs:documentation>The NCBI taxonomy ID for this protein. E.g. 9606 for human, or 4932 for S. cerevisiae.  Used for taxonomy-level filtering in the ProXL web application. If not present, or set to 0, the species name will appear as "Species Unknown" in the web application.</xs:documentation>
-													</xs:annotation>
-												</xs:attribute>
-											</xs:complexType>
-										</xs:element>
-									</xs:sequence>
-									<xs:attribute name="sequence" type="sequence_type" use="required">
-										<xs:annotation>
-											<xs:documentation>The amino acid sequence for this protein.</xs:documentation>
-										</xs:annotation>
-									</xs:attribute>
-								</xs:complexType>
-							</xs:element>
-						</xs:sequence>
-					</xs:complexType>
 				</xs:element>
+
 				<xs:element ref="static_modifications" minOccurs="0"/>
 				<xs:element ref="decoy_labels" minOccurs="0">
 					<xs:annotation>
@@ -318,6 +281,66 @@
 			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
+
+	<xs:element name="matched_proteins">
+		<xs:annotation>
+			<xs:documentation>Contains the protein sequences matched by peptides found in the experiment, and associated names, descriptions, and taxonomy IDs for those proteins. This will typically come from the FASTA file used to search the data. Only the proteins matched by the data should be included, not all the proteins in the FASTA file.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="protein" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>A protein found in the experiment.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="protein">
+		<xs:annotation>
+			<xs:documentation>A protein found in the experiment.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="protein_annotation" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Annotations for this sequence from the sequence database used to search the data. Since there may be multiple annotations for a single sequence (as separated by control-A characters in a FASTA file), each annotation should appear hear associated with a single protein.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="sequence" type="sequence_type" use="required">
+				<xs:annotation>
+					<xs:documentation>The amino acid sequence for this protein.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="protein_annotation">
+		<xs:annotation>
+			<xs:documentation>Annotations for this sequence from the sequence database used to search the data. Since there may be multiple annotations for a single sequence (as separated by control-A characters in a FASTA file), each annotation should appear hear associated with a single protein.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="name" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>The name of this protein, used to report protein names in the ProXL web application. Typically, this is the name for a FASTA entry in a FASTA file in the form of: >NAME DESCRIPTION</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="description" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The description of the protein.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="ncbi-taxonomy-id" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>The NCBI taxonomy ID for this protein. E.g. 9606 for human, or 4932 for S. cerevisiae.  Used for taxonomy-level filtering in the ProXL web application. If not present, or set to 0, the species name will appear as "Species Unknown" in the web application.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+
 	<xs:element name="modifications">
 		<xs:annotation>
 			<xs:documentation>The modifications identified for a peptide.</xs:documentation>
@@ -860,6 +883,7 @@
 			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
+	
 	<xs:element name="search_program_info">
 		<xs:annotation>
 			<xs:documentation>Information relating to the search program(s) used to generate the peptide spectrum matches and scores/annotations for PSMs and peptides.</xs:documentation>
