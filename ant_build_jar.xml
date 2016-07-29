@@ -19,6 +19,10 @@
 
 	<property name="src_java_jaxb_classes_from_xsd" value="src_java_jaxb_classes_from_xsd" />
 
+	<property name="src_constants" value="src_constants" />
+	
+	
+
 	<property name="src_create_import_file_from_java_objects" value="src_create_import_file_from_java_objects" />
 
 	<property name="xsd" value="xsd" />
@@ -149,6 +153,12 @@
         <javac includeantruntime="false"  debug="on" srcdir="src_java_jaxb_classes_from_xsd" destdir="${classes}" source="${java_source}" target="${java_target}"  encoding="${java.source.character.set}" >
             <classpath refid="compile.classpath"/>
         </javac>
+    	
+        <javac includeantruntime="false"  debug="on" srcdir="src_constants" destdir="${classes}" source="${java_source}" target="${java_target}"  encoding="${java.source.character.set}" >
+            <classpath refid="compile.classpath"/>
+        </javac>    	
+    	
+    	
 
         <javac includeantruntime="false"  debug="on" srcdir="src_create_import_file_from_java_objects" destdir="${classes}" source="${java_source}" target="${java_target}"  encoding="${java.source.character.set}" >
             <classpath refid="compile.classpath"/>
