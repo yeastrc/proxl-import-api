@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -25,9 +26,9 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;complexType&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *       &lt;attribute name="search_program" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
- *       &lt;attribute name="annotation_name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
- *       &lt;attribute name="value" use="required" type="{http://www.w3.org/2001/XMLSchema}decimal" /&gt;
+ *       &lt;attribute name="search_program" use="required" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" /&gt;
+ *       &lt;attribute name="annotation_name" use="required" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" /&gt;
+ *       &lt;attribute name="cutoff_value" use="required" type="{http://www.w3.org/2001/XMLSchema}decimal" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -37,15 +38,17 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
-@XmlRootElement(name = "filterable_reported_peptide_annotation")
-public class FilterableReportedPeptideAnnotation {
+@XmlRootElement(name = "search_annotation_cutoff")
+public class SearchAnnotationCutoff {
 
     @XmlAttribute(name = "search_program", required = true)
+    @XmlSchemaType(name = "anySimpleType")
     protected String searchProgram;
     @XmlAttribute(name = "annotation_name", required = true)
+    @XmlSchemaType(name = "anySimpleType")
     protected String annotationName;
-    @XmlAttribute(name = "value", required = true)
-    protected BigDecimal value;
+    @XmlAttribute(name = "cutoff_value", required = true)
+    protected BigDecimal cutoffValue;
 
     /**
      * Gets the value of the searchProgram property.
@@ -96,27 +99,27 @@ public class FilterableReportedPeptideAnnotation {
     }
 
     /**
-     * Gets the value of the value property.
+     * Gets the value of the cutoffValue property.
      * 
      * @return
      *     possible object is
      *     {@link BigDecimal }
      *     
      */
-    public BigDecimal getValue() {
-        return value;
+    public BigDecimal getCutoffValue() {
+        return cutoffValue;
     }
 
     /**
-     * Sets the value of the value property.
+     * Sets the value of the cutoffValue property.
      * 
      * @param value
      *     allowed object is
      *     {@link BigDecimal }
      *     
      */
-    public void setValue(BigDecimal value) {
-        this.value = value;
+    public void setCutoffValue(BigDecimal value) {
+        this.cutoffValue = value;
     }
 
 }

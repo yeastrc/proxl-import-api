@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element ref="{}search_annotation" maxOccurs="unbounded"/&gt;
+ *         &lt;element ref="{}search_annotation_cutoff" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -38,41 +38,41 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "searchAnnotation"
+    "searchAnnotationCutoff"
 })
-@XmlRootElement(name = "psm_annotation_sort_order")
-public class PsmAnnotationSortOrder {
+@XmlRootElement(name = "reported_peptide_annotation_cutoffs_on_import")
+public class ReportedPeptideAnnotationCutoffsOnImport {
 
-    @XmlElement(name = "search_annotation", required = true)
-    protected List<SearchAnnotation> searchAnnotation;
+    @XmlElement(name = "search_annotation_cutoff", required = true)
+    protected List<SearchAnnotationCutoff> searchAnnotationCutoff;
 
     /**
-     * Gets the value of the searchAnnotation property.
+     * Gets the value of the searchAnnotationCutoff property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the searchAnnotation property.
+     * This is why there is not a <CODE>set</CODE> method for the searchAnnotationCutoff property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getSearchAnnotation().add(newItem);
+     *    getSearchAnnotationCutoff().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link SearchAnnotation }
+     * {@link SearchAnnotationCutoff }
      * 
      * 
      */
-    public List<SearchAnnotation> getSearchAnnotation() {
-        if (searchAnnotation == null) {
-            searchAnnotation = new ArrayList<SearchAnnotation>();
+    public List<SearchAnnotationCutoff> getSearchAnnotationCutoff() {
+        if (searchAnnotationCutoff == null) {
+            searchAnnotationCutoff = new ArrayList<SearchAnnotationCutoff>();
         }
-        return this.searchAnnotation;
+        return this.searchAnnotationCutoff;
     }
 
 }
