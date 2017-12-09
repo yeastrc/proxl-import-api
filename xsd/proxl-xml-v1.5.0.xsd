@@ -75,12 +75,31 @@
 						<xs:sequence>
 							<xs:element ref="filterable_psm_annotation_types"/>
 							<xs:element ref="descriptive_psm_annotation_types" minOccurs="0"/>
+							<xs:element name="psm_per_peptide_annotations" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Optional. If this scoring algorithm reports a separate score for each of two cross-linked peptides in a PSM, this element should include the types of scores/annotations to be associated with each peptide. Note that if per-peptide annotations are reported for cross-linked peptides, it is expected that the same annotation is present for unlinked peptides as well.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="filterable_psm_per_peptide_annotation_types">
+											<xs:annotation>
+												<xs:documentation>If the search program supports it, the collection of numeric annotation types (such as scores) that may be associated with a each separate peptide that is part that are part of a single PSM (e.g. two cross-linked PSMs)</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element ref="descriptive_psm_per_peptide_annotation_types" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Optional. The collection of annotation types associated with each separate peptide that is part of a single PSM that are descriptive or not meant to be used to filter based on quality</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
 				<xs:element name="reported_peptide_annotation_types" minOccurs="0">
 					<xs:annotation>
-						<xs:documentation>The types of annotations this search program may have at the reported peptide level.</xs:documentation>
+						<xs:documentation>If the search program reports a peptide-level score for each distinct peptide (e.g., peptide-level scores in Percolator), these are the types of scores/annotations that are reported at that level.</xs:documentation>
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
@@ -421,6 +440,28 @@
 			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
+	<xs:element name="filterable_psm_per_peptide_annotation_type">
+		<xs:annotation>
+			<xs:documentation>A numeric type of psm annotation (such as a score like a q-value for XCorr) that is meant to be used to filter PSMs based on quality of matches. Try to limit indexed annotation types to a minimum.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="name" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>The name for this score, such as "q-value". Displayed on web site.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="description" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>A description for what this score is. Will be shown in ProXL as a tooltip for this score.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="filter_direction" type="filter_direction_type" use="required">
+				<xs:annotation>
+					<xs:documentation>The direction a filterable annotation type is sorted in.  If set to "below", attributes with lower values are considered more significant (such as in the case of p-values). If set to "above", attributes with higher values are considered more significant (such as in the case of XCorr).</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
 	<xs:element name="filterable_peptide_annotation_type">
 		<xs:annotation>
 			<xs:documentation>A numeric type of peptide annotation (such as a score like a q-value for XCorr) that is meant to be used to filter peptides based on quality of matches. Try to limit indexed annotation types to a minimum.</xs:documentation>
@@ -454,6 +495,23 @@
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="descriptive_psm_annotation_type">
+		<xs:annotation>
+			<xs:documentation>An annotation of any type (numeric or string) that is not meant to be used as a possible filter for filtering out PSMs based on quality of matches. Example could include "scan number" or "charge"</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="name" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>The name for this score, such as "q-value". Displayed on web site.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="description" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>A description for what this score is. Will be shown in ProXL as a tooltip for this score.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="descriptive_psm_per_peptide_annotation_type">
 		<xs:annotation>
 			<xs:documentation>An annotation of any type (numeric or string) that is not meant to be used as a possible filter for filtering out PSMs based on quality of matches. Example could include "scan number" or "charge"</xs:documentation>
 		</xs:annotation>
@@ -538,6 +596,16 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	<xs:element name="filterable_psm_per_peptide_annotation_types">
+		<xs:annotation>
+			<xs:documentation>The collection of numeric annotation types (such as scores) that may be associated with a PSM that are meant to be used to filter based on quality</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="filterable_psm_per_peptide_annotation_type" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
 	<xs:element name="filterable_peptide_annotation_types">
 		<xs:annotation>
 			<xs:documentation>The collection of numeric annotation types (such as scores) that may be associated with a reported peptide that are meant to be used to filter based on quality</xs:documentation>
@@ -555,6 +623,16 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="descriptive_psm_annotation_type" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="descriptive_psm_per_peptide_annotation_types">
+		<xs:annotation>
+			<xs:documentation>The collection of annotation types (string or numeric) associated with PSMs that are descriptive or not meant to be used to filter based on quality</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="descriptive_psm_per_peptide_annotation_type" minOccurs="0" maxOccurs="unbounded"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
