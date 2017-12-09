@@ -37,8 +37,8 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
-@XmlRootElement(name = "filterable_psm_annotation")
-public class FilterablePsmAnnotation {
+@XmlRootElement(name = "filterable_psm_per_peptide_annotation")
+public class FilterablePsmPerPeptideAnnotation {
 
     @XmlAttribute(name = "search_program", required = true)
     protected String searchProgram;
