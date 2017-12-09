@@ -75,24 +75,24 @@
 						<xs:sequence>
 							<xs:element ref="filterable_psm_annotation_types"/>
 							<xs:element ref="descriptive_psm_annotation_types" minOccurs="0"/>
-							<xs:element name="psm_per_peptide_annotations" minOccurs="0">
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="psm_per_peptide_annotation_types" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Optional. If this scoring algorithm reports a separate score for each of two cross-linked peptides in a PSM, this element should include the types of scores/annotations to be associated with each peptide. Note that if per-peptide annotations are reported for cross-linked peptides, it is expected that the same annotation is present for unlinked peptides as well.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="filterable_psm_per_peptide_annotation_types">
 								<xs:annotation>
-									<xs:documentation>Optional. If this scoring algorithm reports a separate score for each of two cross-linked peptides in a PSM, this element should include the types of scores/annotations to be associated with each peptide. Note that if per-peptide annotations are reported for cross-linked peptides, it is expected that the same annotation is present for unlinked peptides as well.</xs:documentation>
+									<xs:documentation>If the search program supports it, the collection of numeric annotation types (such as scores) that may be associated with a each separate peptide that is part that are part of a single PSM (e.g. two cross-linked PSMs)</xs:documentation>
 								</xs:annotation>
-								<xs:complexType>
-									<xs:sequence>
-										<xs:element ref="filterable_psm_per_peptide_annotation_types">
-											<xs:annotation>
-												<xs:documentation>If the search program supports it, the collection of numeric annotation types (such as scores) that may be associated with a each separate peptide that is part that are part of a single PSM (e.g. two cross-linked PSMs)</xs:documentation>
-											</xs:annotation>
-										</xs:element>
-										<xs:element ref="descriptive_psm_per_peptide_annotation_types" minOccurs="0">
-											<xs:annotation>
-												<xs:documentation>Optional. The collection of annotation types associated with each separate peptide that is part of a single PSM that are descriptive or not meant to be used to filter based on quality</xs:documentation>
-											</xs:annotation>
-										</xs:element>
-									</xs:sequence>
-								</xs:complexType>
+							</xs:element>
+							<xs:element ref="descriptive_psm_per_peptide_annotation_types" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Optional. The collection of annotation types associated with each separate peptide that is part of a single PSM that are descriptive or not meant to be used to filter based on quality</xs:documentation>
+								</xs:annotation>
 							</xs:element>
 						</xs:sequence>
 					</xs:complexType>
@@ -295,6 +295,11 @@
 			<xs:attribute name="sequence" type="sequence_type" use="required">
 				<xs:annotation>
 					<xs:documentation>The sequence of the peptide, without any special characters.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="unique_id">
+				<xs:annotation>
+					<xs:documentation>Optional. This is a string that uniquely identifies this peptide in this reported peptide (e.g. "1" and "2" for cross-linked peptides.) IMPORTANT: If this file contains separate PSM-level annotations for each peptide in a single cross-linked PSM (e.g. a XCorr for each linked peptide), then this attribute is required, and is referenced when reporting the PSM-level score/annotation for each peptide. </xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 		</xs:complexType>
@@ -672,7 +677,51 @@
 			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
+	<xs:element name="filterable_psm_per_peptide_annotation">
+		<xs:annotation>
+			<xs:documentation>A numeric annotation (usually a score) assigned to a peptide spectrum match (PSM) that is meant to describe the quality of the match and may be used to filter out poor matches. Examples include p-value, q-value, XCorr</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="search_program" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>The name of the search program, must be found in the search_programs element</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="annotation_name" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>The name of the psm annotation type (e.g., "q-value"). Must be found in the possible score types for the above search program</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="value" type="xs:decimal" use="required">
+				<xs:annotation>
+					<xs:documentation>The value (ie, score) assigned for the given annotationtype from the given search program</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
 	<xs:element name="descriptive_psm_annotation">
+		<xs:annotation>
+			<xs:documentation>A descriptive annotation (numeric or string) assigned to a peptide spectrum match (PSM) that is not meant to describe the quality of the match or filter out poor matches. Examples include scan number of precursor charge state.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="search_program" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>The name of the search program, must be found in the search_programs element</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="annotation_name" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>The name of the psm annotation type (e.g., "q-value"). Must be found in the possible score types for the above search program</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="value" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>The value (ie, score) assigned for the given annotationtype from the given search program</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="descriptive_psm_per_peptide_annotation">
 		<xs:annotation>
 			<xs:documentation>A descriptive annotation (numeric or string) assigned to a peptide spectrum match (PSM) that is not meant to describe the quality of the match or filter out poor matches. Examples include scan number of precursor charge state.</xs:documentation>
 		</xs:annotation>
@@ -704,6 +753,16 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	<xs:element name="filterable_psm_per_peptide_annotations">
+		<xs:annotation>
+			<xs:documentation>The numeric annotations (usually scores of some type) assigned to the peptide spectrum match (PSM) that are meant to describe the quality of the match and may be used to filter out poor matches. Examples include p-value, q-value, XCorr</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="filterable_psm_per_peptide_annotation" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
 	<xs:element name="descriptive_psm_annotations">
 		<xs:annotation>
 			<xs:documentation>The descriptive annotations (numeric or string) assigned to the peptide spectrum match (PSM) that are not meant to describe the quality of the match or filter out poor matches. Examples include scan number of precursor charge state.</xs:documentation>
@@ -711,6 +770,20 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="descriptive_psm_annotation" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>A descriptive annotation (numeric or string) assigned to a peptide spectrum match (PSM) that is not meant to describe the quality of the match or filter out poor matches.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="descriptive_psm_per_peptide_annotations">
+		<xs:annotation>
+			<xs:documentation>The descriptive annotations (numeric or string) assigned to the peptide spectrum match (PSM) that are not meant to describe the quality of the match or filter out poor matches. Examples include scan number of precursor charge state.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="descriptive_psm_per_peptide_annotation" maxOccurs="unbounded">
 					<xs:annotation>
 						<xs:documentation>A descriptive annotation (numeric or string) assigned to a peptide spectrum match (PSM) that is not meant to describe the quality of the match or filter out poor matches.</xs:documentation>
 					</xs:annotation>
@@ -729,6 +802,39 @@
 					<xs:annotation>
 						<xs:documentation>The descriptive annotations (numeric or string) assigned to the peptide spectrum match (PSM) that are not meant to describe the quality of the match or filter out poor matches.</xs:documentation>
 					</xs:annotation>
+				</xs:element>
+				<xs:element name="per_peptide_annotations" minOccurs="0" maxOccurs="2">
+					<xs:annotation>
+						<xs:documentation>Optional. If there are scores/annotations reported separately for each peptide in a PSM (e.g., XCorr for each of the two peptides in a cross-linked PSM), those scores are reported here.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="psm_peptide">
+								<xs:annotation>
+									<xs:documentation>Each distinct peptide found in this PSM. For unlinked PSMs, there will be 1 psm_peptide. For cross-linked PSMs, there will be 2 psm_peptide elements.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="filterable_psm_per_peptide_annotations">
+											<xs:annotation>
+												<xs:documentation>The numeric annotations (usually scores of some type) assigned to a specific peptide that is part of a peptide spectrum match (PSM) that are meant to describe the quality of the match and may be used to filter out poor matches. Examples include p-value, q-value, XCorr</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element ref="descriptive_psm_per_peptide_annotations" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>The descriptive annotations (numeric or string) assigned to a specific peptide that is part of the peptide spectrum match (PSM) that are not meant to describe the quality of the match or filter out poor matches. Examples include scan number of precursor charge state.</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="unique_id" use="required">
+										<xs:annotation>
+											<xs:documentation>The unique id given to this peptide for this reported_peptide (e.g. "1" or "2". Recall that a reported_peptide is the identified ion, so will contain two separate peptides in the case of a cross-linked peptide. See the peptide element under the peptides element for a reported_peptide.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
 			<xs:attribute name="scan_file_name" type="xs:string">
