@@ -80,7 +80,7 @@
 				</xs:element>
 				<xs:element name="psm_per_peptide_annotation_types" minOccurs="0">
 					<xs:annotation>
-						<xs:documentation>Optional. If this scoring algorithm reports a separate score for each of two cross-linked peptides in a PSM, this element should include the types of scores/annotations to be associated with each peptide. Note that if per-peptide annotations are reported for cross-linked peptides, it is expected that the same annotation is present for unlinked peptides as well.</xs:documentation>
+						<xs:documentation>Optional. If this scoring algorithm reports a separate score for each of two cross-linked peptides in a PSM, this element should include the types of scores/annotations to be associated with each peptide. Note that if per-peptide annotations are reported for cross-linked peptides, it is expected that the same annotation is present for non cross-linked peptides as well.</xs:documentation>
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
@@ -1142,11 +1142,30 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="visible_psm_annotations"/>
-				<xs:element ref="visible_reported_peptide_annotations" minOccurs="0"/>
+				<xs:element ref="visible_psm_per_peptide_annotations" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Optional. The PSM-level annotations that are associated individual with each peptide (for example, each separate peptide in a cross-link) that should be visible by default when viewing PSM-level data.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="visible_reported_peptide_annotations" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Optional. The peptide-level annotations that are visible by default.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="visible_psm_annotations">
+		<xs:annotation>
+			<xs:documentation>The PSM-level annotations that are visible by default when viewing PSM-level data.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="search_annotation" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="visible_psm_per_peptide_annotations">
 		<xs:annotation>
 			<xs:documentation>The PSM-level annotations that are visible by default when viewing PSM-level data.</xs:documentation>
 		</xs:annotation>
