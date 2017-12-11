@@ -8,7 +8,6 @@
 
 package org.yeastrc.proxl_import.api.xml_dto;
 
-import java.math.BigDecimal;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -27,7 +26,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;attribute name="search_program" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
  *       &lt;attribute name="annotation_name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
- *       &lt;attribute name="value" use="required" type="{http://www.w3.org/2001/XMLSchema}decimal" />
+ *       &lt;attribute name="value" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -37,15 +36,15 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
-@XmlRootElement(name = "filterable_psm_annotation")
-public class FilterablePsmAnnotation {
+@XmlRootElement(name = "descriptive_psm_per_peptide_annotation")
+public class DescriptivePsmPerPeptideAnnotation {
 
     @XmlAttribute(name = "search_program", required = true)
     protected String searchProgram;
     @XmlAttribute(name = "annotation_name", required = true)
     protected String annotationName;
     @XmlAttribute(name = "value", required = true)
-    protected BigDecimal value;
+    protected String value;
 
     /**
      * Gets the value of the searchProgram property.
@@ -100,10 +99,10 @@ public class FilterablePsmAnnotation {
      * 
      * @return
      *     possible object is
-     *     {@link BigDecimal }
+     *     {@link String }
      *     
      */
-    public BigDecimal getValue() {
+    public String getValue() {
         return value;
     }
 
@@ -112,10 +111,10 @@ public class FilterablePsmAnnotation {
      * 
      * @param value
      *     allowed object is
-     *     {@link BigDecimal }
+     *     {@link String }
      *     
      */
-    public void setValue(BigDecimal value) {
+    public void setValue(String value) {
         this.value = value;
     }
 

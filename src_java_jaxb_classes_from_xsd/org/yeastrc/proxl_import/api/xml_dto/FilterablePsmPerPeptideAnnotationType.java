@@ -8,7 +8,6 @@
 
 package org.yeastrc.proxl_import.api.xml_dto;
 
-import java.math.BigDecimal;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -25,9 +24,9 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;complexType>
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;attribute name="search_program" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
- *       &lt;attribute name="annotation_name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
- *       &lt;attribute name="value" use="required" type="{http://www.w3.org/2001/XMLSchema}decimal" />
+ *       &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="description" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="filter_direction" use="required" type="{}filter_direction_type" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -37,86 +36,86 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
-@XmlRootElement(name = "filterable_psm_annotation")
-public class FilterablePsmAnnotation {
+@XmlRootElement(name = "filterable_psm_per_peptide_annotation_type")
+public class FilterablePsmPerPeptideAnnotationType {
 
-    @XmlAttribute(name = "search_program", required = true)
-    protected String searchProgram;
-    @XmlAttribute(name = "annotation_name", required = true)
-    protected String annotationName;
-    @XmlAttribute(name = "value", required = true)
-    protected BigDecimal value;
+    @XmlAttribute(name = "name", required = true)
+    protected String name;
+    @XmlAttribute(name = "description")
+    protected String description;
+    @XmlAttribute(name = "filter_direction", required = true)
+    protected FilterDirectionType filterDirection;
 
     /**
-     * Gets the value of the searchProgram property.
+     * Gets the value of the name property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getSearchProgram() {
-        return searchProgram;
+    public String getName() {
+        return name;
     }
 
     /**
-     * Sets the value of the searchProgram property.
+     * Sets the value of the name property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setSearchProgram(String value) {
-        this.searchProgram = value;
+    public void setName(String value) {
+        this.name = value;
     }
 
     /**
-     * Gets the value of the annotationName property.
+     * Gets the value of the description property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getAnnotationName() {
-        return annotationName;
+    public String getDescription() {
+        return description;
     }
 
     /**
-     * Sets the value of the annotationName property.
+     * Sets the value of the description property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setAnnotationName(String value) {
-        this.annotationName = value;
+    public void setDescription(String value) {
+        this.description = value;
     }
 
     /**
-     * Gets the value of the value property.
+     * Gets the value of the filterDirection property.
      * 
      * @return
      *     possible object is
-     *     {@link BigDecimal }
+     *     {@link FilterDirectionType }
      *     
      */
-    public BigDecimal getValue() {
-        return value;
+    public FilterDirectionType getFilterDirection() {
+        return filterDirection;
     }
 
     /**
-     * Sets the value of the value property.
+     * Sets the value of the filterDirection property.
      * 
      * @param value
      *     allowed object is
-     *     {@link BigDecimal }
+     *     {@link FilterDirectionType }
      *     
      */
-    public void setValue(BigDecimal value) {
-        this.value = value;
+    public void setFilterDirection(FilterDirectionType value) {
+        this.filterDirection = value;
     }
 
 }
