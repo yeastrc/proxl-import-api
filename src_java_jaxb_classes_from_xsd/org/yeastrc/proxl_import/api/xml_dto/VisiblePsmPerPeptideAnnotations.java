@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{}decoy_label" maxOccurs="unbounded"/>
+ *         &lt;element ref="{}search_annotation" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -38,41 +38,41 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "decoyLabel"
+    "searchAnnotation"
 })
-@XmlRootElement(name = "decoy_labels")
-public class DecoyLabels {
+@XmlRootElement(name = "visible_psm_per_peptide_annotations")
+public class VisiblePsmPerPeptideAnnotations {
 
-    @XmlElement(name = "decoy_label", required = true)
-    protected List<DecoyLabel> decoyLabel;
+    @XmlElement(name = "search_annotation", required = true)
+    protected List<SearchAnnotation> searchAnnotation;
 
     /**
-     * Gets the value of the decoyLabel property.
+     * Gets the value of the searchAnnotation property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the decoyLabel property.
+     * This is why there is not a <CODE>set</CODE> method for the searchAnnotation property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getDecoyLabel().add(newItem);
+     *    getSearchAnnotation().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link DecoyLabel }
+     * {@link SearchAnnotation }
      * 
      * 
      */
-    public List<DecoyLabel> getDecoyLabel() {
-        if (decoyLabel == null) {
-            decoyLabel = new ArrayList<DecoyLabel>();
+    public List<SearchAnnotation> getSearchAnnotation() {
+        if (searchAnnotation == null) {
+            searchAnnotation = new ArrayList<SearchAnnotation>();
         }
-        return this.decoyLabel;
+        return this.searchAnnotation;
     }
 
 }
