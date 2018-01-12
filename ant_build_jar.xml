@@ -5,8 +5,8 @@
 	<property name="include_svn_info" value="true"/>
 -->		
 		
-	<property name="java_target" value="1.7"/>
-	<property name="java_source" value="1.7"/>
+	<property name="java_target" value="1.8"/>
+	<property name="java_source" value="1.8"/>
 		
 	<property name="java.source.character.set" value="iso-8859-1"/>
 	
