@@ -961,7 +961,7 @@
 				</xs:element>
 				<xs:element ref="crosslink_masses" minOccurs="0">
 					<xs:annotation>
-						<xs:documentation>The list of possible masses of this linker in this experiment when both ends of the linker are bound to peptides--such as in the case of crosslinks or looplinks. Required if crosslinks or looplinks were searched for and if spectra are being imported.</xs:documentation>
+						<xs:documentation>The list of possible masses of this linker in this experiment. Required if cross-links or loop-links were searched for and if spectra are being imported.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 			</xs:sequence>
@@ -1009,6 +1009,7 @@
 						<xs:documentation>A mass used for this linker in this search when both ends are bound to peptides--such as in crosslinks or looplinks</xs:documentation>
 					</xs:annotation>
 				</xs:element>
+				<xs:element ref="cleaved_crosslink_mass" minOccurs="0" maxOccurs="unbounded"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -1288,6 +1289,18 @@
 			<xs:sequence>
 				<xs:element ref="search_annotation" maxOccurs="unbounded"/>
 			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="cleaved_crosslink_mass">
+		<xs:annotation>
+			<xs:documentation>If the cross-linker cleavable, a mass to be used as a cleaved product of this cross-linker. Ie, the mass of each side of the cross-linker bound to a peptide after cleavage. A cleavable linkers will usually have two of these (but not always).</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="mass" type="mass" use="required">
+				<xs:annotation>
+					<xs:documentation>The mass in daltons.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
 </xs:schema>

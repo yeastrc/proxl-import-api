@@ -1,5 +1,7 @@
+.classpath
+.project
 /bin
 /jaxb-ri
 /classes
-/gen_java_classes_from_xsd
 /deploy
+/.idea/

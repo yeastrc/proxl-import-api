@@ -25,14 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;complexType>
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;attribute name="amino_acid" use="required">
- *         &lt;simpleType>
- *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *             &lt;length value="1"/>
- *           &lt;/restriction>
- *         &lt;/simpleType>
- *       &lt;/attribute>
- *       &lt;attribute name="mass_change" use="required" type="{}mass" />
+ *       &lt;attribute name="mass" use="required" type="{}mass" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -42,60 +35,34 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
-@XmlRootElement(name = "static_modification")
-public class StaticModification {
+@XmlRootElement(name = "cleaved_crosslink_mass")
+public class CleavedCrosslinkMass {
 
-    @XmlAttribute(name = "amino_acid", required = true)
-    protected String aminoAcid;
-    @XmlAttribute(name = "mass_change", required = true)
-    protected BigDecimal massChange;
+    @XmlAttribute(name = "mass", required = true)
+    protected BigDecimal mass;
 
     /**
-     * Gets the value of the aminoAcid property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAminoAcid() {
-        return aminoAcid;
-    }
-
-    /**
-     * Sets the value of the aminoAcid property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setAminoAcid(String value) {
-        this.aminoAcid = value;
-    }
-
-    /**
-     * Gets the value of the massChange property.
+     * Gets the value of the mass property.
      * 
      * @return
      *     possible object is
      *     {@link BigDecimal }
      *     
      */
-    public BigDecimal getMassChange() {
-        return massChange;
+    public BigDecimal getMass() {
+        return mass;
     }
 
     /**
-     * Sets the value of the massChange property.
+     * Sets the value of the mass property.
      * 
      * @param value
      *     allowed object is
      *     {@link BigDecimal }
      *     
      */
-    public void setMassChange(BigDecimal value) {
-        this.massChange = value;
+    public void setMass(BigDecimal value) {
+        this.mass = value;
     }
 
 }
