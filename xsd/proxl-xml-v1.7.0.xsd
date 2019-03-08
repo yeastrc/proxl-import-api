@@ -851,7 +851,7 @@
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="psm_peptide" minOccurs="2" maxOccurs="2">
+							<xs:element name="psm_peptide" maxOccurs="2">
 								<xs:annotation>
 									<xs:documentation>Each distinct peptide found in this PSM. For cross-linked PSMs, there will be 2 psm_peptide elements.</xs:documentation>
 								</xs:annotation>
