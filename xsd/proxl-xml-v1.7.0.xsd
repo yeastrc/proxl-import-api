@@ -845,7 +845,7 @@
 						<xs:documentation>The descriptive annotations (numeric or string) assigned to the peptide spectrum match (PSM) that are not meant to describe the quality of the match or filter out poor matches.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
-				<xs:element name="per_peptide_annotations" minOccurs="0">
+				<xs:element name="per_peptide_annotations" minOccurs="0" maxOccurs="unbounded">
 					<xs:annotation>
 						<xs:documentation>Optional. Must use when there are separate data to report for each peptide in a cross-link PSM. Examples include cleavable cross-linker experiments or whenever a separate score score is provided for each peptide in a cross-link (e.g. an XCorr for each separate peptide ID).</xs:documentation>
 					</xs:annotation>
