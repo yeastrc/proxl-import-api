@@ -609,6 +609,15 @@
 			<xs:pattern value="([A-Z]+)"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="amino_acid_residue">
+		<xs:annotation>
+			<xs:documentation>The single letter code for an amino acid. E.g., "K" for lysine.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+			<xs:pattern value="([A-Z]+)"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="link_type">
 		<xs:annotation>
 			<xs:documentation>A peptide link type must be this type, limits to 'crosslink' or 'looplink' or 'unlinked' 'unlinked means neither a crosslink nor looplink</xs:documentation>
@@ -617,6 +626,15 @@
 			<xs:enumeration value="crosslink"/>
 			<xs:enumeration value="looplink"/>
 			<xs:enumeration value="unlinked"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="protein_terminus">
+		<xs:annotation>
+			<xs:documentation>The terminus of a protein, either "n" or "c".</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="n"/>
+			<xs:enumeration value="c"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="peptide_position">
@@ -1375,7 +1393,7 @@
 	</xs:element>
 	<xs:element name="protein_terminus">
 		<xs:complexType>
-			<xs:attribute name="terminus_end" type="xs:string" use="required">
+			<xs:attribute name="terminus_end" type="protein_terminus" use="required">
 				<xs:annotation>
 					<xs:documentation>The terminal end, either "n" or "c".</xs:documentation>
 				</xs:annotation>
