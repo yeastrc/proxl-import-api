@@ -1368,7 +1368,7 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="residue" type="xs:string"/>
+	<xs:element name="residue" type="amino_acid_residue"/>
 	<xs:element name="residues">
 		<xs:complexType>
 			<xs:sequence>
