@@ -1328,7 +1328,7 @@
 			<xs:sequence>
 				<xs:element ref="linked_end" minOccurs="2" maxOccurs="2">
 					<xs:annotation>
-						<xs:documentation>Define where one end of the cross-linker may react with a protein. There must be two of these elements, even if both sides are the same.</xs:documentation>
+						<xs:documentation>Define where one end of the cross-linker may react with a protein. There must be two of these elements, even if both sides are the same. This must contain at least one residues element or protein_termini element.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 			</xs:sequence>
@@ -1342,17 +1342,12 @@
 						<xs:documentation>A list of amino acid residues with which this end of the cross-linker may bind.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
+				<xs:element ref="protein_termini" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>A list of protein terminal positions to which this cross-linker can bind. E.g. 0 or 1 residues away from n-terminus.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
 			</xs:sequence>
-			<xs:attribute name="binds_protein_n_terminus">
-				<xs:annotation>
-					<xs:documentation>Set to true if this end of the cross-linker bends with the protein n terminus. Default is false.</xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
-			<xs:attribute name="binds_protein_c_terminus">
-				<xs:annotation>
-					<xs:documentation>Set to true if this end of the cross-linker binds with the protein c terminus. Default is false.</xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="residue" type="xs:string"/>
@@ -1365,6 +1360,31 @@
 					</xs:annotation>
 				</xs:element>
 			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="protein_termini">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="protein_terminus" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>A protein terminus, either n or c, and the number of residues away from that terminus the linker can bind.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="protein_terminus">
+		<xs:complexType>
+			<xs:attribute name="terminus_end" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>The terminal end, either "n" or "c".</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="distance_from_terminus" type="xs:nonNegativeInteger" use="required">
+				<xs:annotation>
+					<xs:documentation>The distance from the given terminus. 0 indicates the terminus itself. Indicates one position removed from the terminus. E.g., in the protein PEPTIDE, a distance of 0 from the c terminus would be E, a distance of 1 would be D.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
 </xs:schema>
