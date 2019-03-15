@@ -628,7 +628,7 @@
 			<xs:enumeration value="unlinked"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="protein_terminus">
+	<xs:simpleType name="protein_terminus_designation">
 		<xs:annotation>
 			<xs:documentation>The terminus of a protein, either "n" or "c".</xs:documentation>
 		</xs:annotation>
@@ -1393,7 +1393,7 @@
 	</xs:element>
 	<xs:element name="protein_terminus">
 		<xs:complexType>
-			<xs:attribute name="terminus_end" type="protein_terminus" use="required">
+			<xs:attribute name="terminus_end" type="protein_terminus_designation" use="required">
 				<xs:annotation>
 					<xs:documentation>The terminal end, either "n" or "c".</xs:documentation>
 				</xs:annotation>
