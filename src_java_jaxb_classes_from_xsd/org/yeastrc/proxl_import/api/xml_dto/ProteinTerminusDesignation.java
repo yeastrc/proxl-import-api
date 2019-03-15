@@ -14,34 +14,31 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for link_type.
+ * <p>Java class for protein_terminus_designation.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <pre>
- * &lt;simpleType name="link_type">
+ * &lt;simpleType name="protein_terminus_designation">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="crosslink"/>
- *     &lt;enumeration value="looplink"/>
- *     &lt;enumeration value="unlinked"/>
+ *     &lt;enumeration value="n"/>
+ *     &lt;enumeration value="c"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
  * 
  */
-@XmlType(name = "link_type")
+@XmlType(name = "protein_terminus_designation")
 @XmlEnum
-public enum LinkType {
+public enum ProteinTerminusDesignation {
 
-    @XmlEnumValue("crosslink")
-    CROSSLINK("crosslink"),
-    @XmlEnumValue("looplink")
-    LOOPLINK("looplink"),
-    @XmlEnumValue("unlinked")
-    UNLINKED("unlinked");
+    @XmlEnumValue("n")
+    N("n"),
+    @XmlEnumValue("c")
+    C("c");
     private final String value;
 
-    LinkType(String v) {
+    ProteinTerminusDesignation(String v) {
         value = v;
     }
 
@@ -49,8 +46,8 @@ public enum LinkType {
         return value;
     }
 
-    public static LinkType fromValue(String v) {
-        for (LinkType c: LinkType.values()) {
+    public static ProteinTerminusDesignation fromValue(String v) {
+        for (ProteinTerminusDesignation c: ProteinTerminusDesignation.values()) {
             if (c.value.equals(v)) {
                 return c;
             }
