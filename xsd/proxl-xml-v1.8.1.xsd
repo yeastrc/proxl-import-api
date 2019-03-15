@@ -1400,7 +1400,7 @@
 			</xs:attribute>
 			<xs:attribute name="distance_from_terminus" type="xs:nonNegativeInteger" use="required">
 				<xs:annotation>
-					<xs:documentation>The distance from the given terminus. 0 indicates the terminus itself. Indicates one position removed from the terminus. E.g., in the protein PEPTIDE, a distance of 0 from the c terminus would be E, a distance of 1 would be D.</xs:documentation>
+					<xs:documentation>The distance from the given terminus. 0 indicates the terminus itself. 1 indicates one position removed from the terminus. E.g., in the protein PEPTIDE, a distance of 0 from the c terminus would be E, a distance of 1 would be D.</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 		</xs:complexType>
