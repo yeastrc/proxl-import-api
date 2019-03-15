@@ -8,11 +8,12 @@
 
 package org.yeastrc.proxl_import.api.xml_dto;
 
-import java.math.BigDecimal;
+import java.math.BigInteger;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -25,8 +26,8 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;complexType>
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;attribute name="mass" use="required" type="{}mass" />
- *       &lt;attribute name="chemical_formula" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="terminus_end" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="distance_from_terminus" use="required" type="{http://www.w3.org/2001/XMLSchema}nonNegativeInteger" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -36,60 +37,61 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
-@XmlRootElement(name = "crosslink_mass")
-public class CrosslinkMass {
+@XmlRootElement(name = "protein_terminus")
+public class ProteinTerminus {
 
-    @XmlAttribute(name = "mass", required = true)
-    protected BigDecimal mass;
-    @XmlAttribute(name = "chemical_formula")
-    protected String chemicalFormula;
-
-    /**
-     * Gets the value of the mass property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getMass() {
-        return mass;
-    }
+    @XmlAttribute(name = "terminus_end", required = true)
+    protected String terminusEnd;
+    @XmlAttribute(name = "distance_from_terminus", required = true)
+    @XmlSchemaType(name = "nonNegativeInteger")
+    protected BigInteger distanceFromTerminus;
 
     /**
-     * Sets the value of the mass property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setMass(BigDecimal value) {
-        this.mass = value;
-    }
-
-    /**
-     * Gets the value of the chemicalFormula property.
+     * Gets the value of the terminusEnd property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getChemicalFormula() {
-        return chemicalFormula;
+    public String getTerminusEnd() {
+        return terminusEnd;
     }
 
     /**
-     * Sets the value of the chemicalFormula property.
+     * Sets the value of the terminusEnd property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setChemicalFormula(String value) {
-        this.chemicalFormula = value;
+    public void setTerminusEnd(String value) {
+        this.terminusEnd = value;
+    }
+
+    /**
+     * Gets the value of the distanceFromTerminus property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
+     */
+    public BigInteger getDistanceFromTerminus() {
+        return distanceFromTerminus;
+    }
+
+    /**
+     * Sets the value of the distanceFromTerminus property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
+     */
+    public void setDistanceFromTerminus(BigInteger value) {
+        this.distanceFromTerminus = value;
     }
 
 }

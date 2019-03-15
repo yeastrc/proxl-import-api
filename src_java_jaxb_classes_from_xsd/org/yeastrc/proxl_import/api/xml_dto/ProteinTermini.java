@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{}linker" maxOccurs="unbounded"/>
+ *         &lt;element ref="{}protein_terminus" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -38,41 +38,41 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "linker"
+    "proteinTerminus"
 })
-@XmlRootElement(name = "linkers")
-public class Linkers {
+@XmlRootElement(name = "protein_termini")
+public class ProteinTermini {
 
-    @XmlElement(required = true)
-    protected List<Linker> linker;
+    @XmlElement(name = "protein_terminus", required = true)
+    protected List<ProteinTerminus> proteinTerminus;
 
     /**
-     * Gets the value of the linker property.
+     * A protein terminus, either n or c, and the number of residues away from that terminus the linker can bind.Gets the value of the proteinTerminus property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the linker property.
+     * This is why there is not a <CODE>set</CODE> method for the proteinTerminus property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getLinker().add(newItem);
+     *    getProteinTerminus().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Linker }
+     * {@link ProteinTerminus }
      * 
      * 
      */
-    public List<Linker> getLinker() {
-        if (linker == null) {
-            linker = new ArrayList<Linker>();
+    public List<ProteinTerminus> getProteinTerminus() {
+        if (proteinTerminus == null) {
+            proteinTerminus = new ArrayList<ProteinTerminus>();
         }
-        return this.linker;
+        return this.proteinTerminus;
     }
 
 }
