@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{}protein" maxOccurs="unbounded"/>
+ *         &lt;element ref="{}linked_end" maxOccurs="2" minOccurs="2"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -38,41 +38,41 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "protein"
+    "linkedEnd"
 })
-@XmlRootElement(name = "matched_proteins")
-public class MatchedProteins {
+@XmlRootElement(name = "linked_ends")
+public class LinkedEnds {
 
-    @XmlElement(required = true)
-    protected List<Protein> protein;
+    @XmlElement(name = "linked_end", required = true)
+    protected List<LinkedEnd> linkedEnd;
 
     /**
-     * A protein found in the experiment.Gets the value of the protein property.
+     * Define where one end of the cross-linker may react with a protein. There must be two of these elements, even if both sides are the same.Gets the value of the linkedEnd property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the protein property.
+     * This is why there is not a <CODE>set</CODE> method for the linkedEnd property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getProtein().add(newItem);
+     *    getLinkedEnd().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Protein }
+     * {@link LinkedEnd }
      * 
      * 
      */
-    public List<Protein> getProtein() {
-        if (protein == null) {
-            protein = new ArrayList<Protein>();
+    public List<LinkedEnd> getLinkedEnd() {
+        if (linkedEnd == null) {
+            linkedEnd = new ArrayList<LinkedEnd>();
         }
-        return this.protein;
+        return this.linkedEnd;
     }
 
 }

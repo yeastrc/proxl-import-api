@@ -8,7 +8,6 @@
 
 package org.yeastrc.proxl_import.api.xml_dto;
 
-import java.math.BigDecimal;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -26,9 +25,11 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;complexType>
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;attribute name="search_program" use="required" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" />
- *       &lt;attribute name="annotation_name" use="required" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" />
- *       &lt;attribute name="cutoff_value" use="required" type="{http://www.w3.org/2001/XMLSchema}decimal" />
+ *       &lt;sequence>
+ *         &lt;element ref="{}residues" minOccurs="0"/>
+ *       &lt;/sequence>
+ *       &lt;attribute name="binds_protein_n_terminus" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" />
+ *       &lt;attribute name="binds_protein_c_terminus" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -37,89 +38,90 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "")
-@XmlRootElement(name = "search_annotation_cutoff")
-public class SearchAnnotationCutoff {
+@XmlType(name = "", propOrder = {
+    "residues"
+})
+@XmlRootElement(name = "linked_end")
+public class LinkedEnd {
 
-    @XmlAttribute(name = "search_program", required = true)
+    protected Residues residues;
+    @XmlAttribute(name = "binds_protein_n_terminus")
     @XmlSchemaType(name = "anySimpleType")
-    protected String searchProgram;
-    @XmlAttribute(name = "annotation_name", required = true)
+    protected String bindsProteinNTerminus;
+    @XmlAttribute(name = "binds_protein_c_terminus")
     @XmlSchemaType(name = "anySimpleType")
-    protected String annotationName;
-    @XmlAttribute(name = "cutoff_value", required = true)
-    protected BigDecimal cutoffValue;
+    protected String bindsProteinCTerminus;
 
     /**
-     * Gets the value of the searchProgram property.
+     * A list of amino acid residues with which this end of the cross-linker may bind.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Residues }
+     *     
+     */
+    public Residues getResidues() {
+        return residues;
+    }
+
+    /**
+     * Sets the value of the residues property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Residues }
+     *     
+     */
+    public void setResidues(Residues value) {
+        this.residues = value;
+    }
+
+    /**
+     * Gets the value of the bindsProteinNTerminus property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getSearchProgram() {
-        return searchProgram;
+    public String getBindsProteinNTerminus() {
+        return bindsProteinNTerminus;
     }
 
     /**
-     * Sets the value of the searchProgram property.
+     * Sets the value of the bindsProteinNTerminus property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setSearchProgram(String value) {
-        this.searchProgram = value;
+    public void setBindsProteinNTerminus(String value) {
+        this.bindsProteinNTerminus = value;
     }
 
     /**
-     * Gets the value of the annotationName property.
+     * Gets the value of the bindsProteinCTerminus property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getAnnotationName() {
-        return annotationName;
+    public String getBindsProteinCTerminus() {
+        return bindsProteinCTerminus;
     }
 
     /**
-     * Sets the value of the annotationName property.
+     * Sets the value of the bindsProteinCTerminus property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setAnnotationName(String value) {
-        this.annotationName = value;
-    }
-
-    /**
-     * Gets the value of the cutoffValue property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getCutoffValue() {
-        return cutoffValue;
-    }
-
-    /**
-     * Sets the value of the cutoffValue property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setCutoffValue(BigDecimal value) {
-        this.cutoffValue = value;
+    public void setBindsProteinCTerminus(String value) {
+        this.bindsProteinCTerminus = value;
     }
 
 }

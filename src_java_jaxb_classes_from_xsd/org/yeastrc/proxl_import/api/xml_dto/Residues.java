@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{}protein" maxOccurs="unbounded"/>
+ *         &lt;element ref="{}residue" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -38,41 +38,41 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "protein"
+    "residue"
 })
-@XmlRootElement(name = "matched_proteins")
-public class MatchedProteins {
+@XmlRootElement(name = "residues")
+public class Residues {
 
     @XmlElement(required = true)
-    protected List<Protein> protein;
+    protected List<String> residue;
 
     /**
-     * A protein found in the experiment.Gets the value of the protein property.
+     * The single letter code for the residue with which this end of the crosslinker may bind. E.g., K Gets the value of the residue property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the protein property.
+     * This is why there is not a <CODE>set</CODE> method for the residue property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getProtein().add(newItem);
+     *    getResidue().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Protein }
+     * {@link String }
      * 
      * 
      */
-    public List<Protein> getProtein() {
-        if (protein == null) {
-            protein = new ArrayList<Protein>();
+    public List<String> getResidue() {
+        if (residue == null) {
+            residue = new ArrayList<String>();
         }
-        return this.protein;
+        return this.residue;
     }
 
 }

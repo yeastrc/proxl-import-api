@@ -14,6 +14,6 @@
 xjc \
   -d ../src_java_jaxb_classes_from_xsd \
   -p org.yeastrc.proxl_import.api.xml_dto  \
-  ../xsd/proxl-xml-v1.7.0.xsd
+  ../xsd/proxl-xml-v1.8.0.xsd
 
 
