@@ -8,6 +8,7 @@ REM  Use xjc from JDK.  It is a slightly older version in java 8 JDK but adequat
 REM  May need path to JDK before 'xjc'
 
 REM windows one-liner
-xjc -d ..\src_java_jaxb_classes_from_xsd -p org.yeastrc.limelight.proxl_import.api.xml_dto ..\xsd/proxl-xml-v1.7.0.xsd
+REM Update filename at vX.X.X
+REM xjc -d ..\src_java_jaxb_classes_from_xsd -p org.yeastrc.limelight.proxl_import.api.xml_dto ..\xsd/proxl-xml-vX.X.X.xsd
 
 
