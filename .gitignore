@@ -1,9 +1,3 @@
-.classpath
-.project
-/bin
-/jaxb-ri
-/classes
-/deploy
-/.idea
-/build
+.idea
 .gradle
+build
