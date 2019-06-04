@@ -4,4 +4,6 @@
 /jaxb-ri
 /classes
 /deploy
-/.idea/
+/.idea
+/build
+.gradle
