@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/yeastrc/proxl-import-api.svg?branch=master)](https://travis-ci.com/yeastrc/proxl-import-api)
+
 # proxl-import-api
 Included in this repository are the schema definition for Proxl XML files and
 Java code for simplifying the creation of software to create Proxl XML files.
