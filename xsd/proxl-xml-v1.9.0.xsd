@@ -352,13 +352,13 @@
 				</xs:element>
 				<xs:element name="protein_isotope_labels" minOccurs="0">
 					<xs:annotation>
-						<xs:documentation>Optional. If this protein in the experiment may exist in an isotopically labelled state, the possible isotope label for the protein should be listed here.</xs:documentation>
+						<xs:documentation>Optional. If this is an isotopically labelled protein sequence, the isotope label for the protein should be listed here. Note that non-labeled and labeld proteins should be separate protein entries eventhough their protein sequences are the same.</xs:documentation>
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element name="protein_isotope_label" minOccurs="0">
 								<xs:annotation>
-									<xs:documentation>The isotope label this protein may have.</xs:documentation>
+									<xs:documentation>The isotope label for this protein.</xs:documentation>
 								</xs:annotation>
 								<xs:complexType>
 									<xs:attribute name="label" use="required">
