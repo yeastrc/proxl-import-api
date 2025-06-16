@@ -608,8 +608,6 @@
 			<xs:documentation>The single letter code for an amino acid. E.g., "K" for lysine.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:length value="1"/>
-			<xs:pattern value="([A-Z]+)"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="link_type">
@@ -1044,13 +1042,6 @@
 				<xs:element ref="linker" maxOccurs="unbounded"/>
 			</xs:sequence>
 		</xs:complexType>
-		<xs:unique name="linker_name_unique">
-			<xs:annotation>
-				<xs:documentation>Ensure a given linker name isonly present once.</xs:documentation>
-			</xs:annotation>
-			<xs:selector xpath="linker"/>
-			<xs:field xpath="@name"/>
-		</xs:unique>
 	</xs:element>
 	<xs:element name="configuration_file">
 		<xs:annotation>
