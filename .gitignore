@@ -8,3 +8,7 @@
 /build
 .gradle
 /.settings
+
+# JAXB classes are generated from xsd/proxl-xml.xsd at build time (see .github workflows
+# and gen_java_classes_from_xsd/) - not checked in.
+/src_java_jaxb_classes_from_xsd/
