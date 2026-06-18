@@ -59,7 +59,7 @@ jobs:
       - name: Switch to repository branch
         run: git stash && git fetch && git checkout repository
       - name: Publish to local maven repo
-        run: mvn install:install-file -DgroupId=org.yeastrc -DartifactId=proxl-import-api -Dversion=${{ steps.get_version.outputs.VERSION }} -Dfile=build/libs/${{ env.LIB_JAR }} -Dpackaging=jar -DgeneratePom=true -DlocalRepositoryPath=.  -DcreateChecksum=true
+        run: mvn install:install-file -DgroupId=org.yeastrc -DartifactId=proxl-import-api -Dversion=${{ steps.get_version.outputs.VERSION }} -Dfile=build/libs/${{ env.LIB_JAR }} -Dsources=build/libs/proxl-import-api-sources.jar -Dpackaging=jar -DgeneratePom=true -DlocalRepositoryPath=.  -DcreateChecksum=true
       - name: Commit local maven repo update
         run: |
           git config --global user.name 'GitHub Release Action'

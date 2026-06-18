@@ -89,3 +89,13 @@ jar {
 					'Git-Branch': gitBranch ])
     }
 }
+
+//  Source jar (classifier 'sources') so IDEs (e.g. Eclipse on proxl-web-app) can attach and view
+//  the JAXB-generated class source. Includes the generated classes in src_java_jaxb_classes_from_xsd
+//  (produced by xjc before the build) plus the hand-written convenience/constant sources.
+task sourcesJar(type: Jar) {
+    archiveBaseName = 'proxl-import-api'
+    archiveClassifier = 'sources'
+    from sourceSets.main.allJava
+}
+assemble.dependsOn sourcesJar
